@@ -1,0 +1,186 @@
+---
+title: 'Understanding Data Manipulation Language (DML) in SQL'
+publishedAt: '2026-02-21'
+summary: 'After creating your database structure, the next step is working with the data itself using DML commands like INSERT, UPDATE, and DELETE.'
+image: '/images/blog/vending-bench-stress-test.png'
+---
+
+After creating your database structure using DDL, the next step is working with the data itself.
+This is where **Data Manipulation Language (DML)** comes in.
+
+DML commands are used to:
+
+- Add data
+- Modify data
+- Remove data
+
+Unlike DDL (which changes structure), DML directly interacts with the **rows** inside your tables.
+
+The main DML commands are:
+
+1. **INSERT**
+2. **UPDATE**
+3. **DELETE**
+
+Let's break them down clearly.
+
+---
+
+## 1️⃣ INSERT — Adding Data to a Table
+
+The `INSERT` command is used to add new rows to a table.
+The table does not need to be empty. If data already exists, SQL simply appends the new rows.
+
+### Method 1: Insert Values Manually
+
+This is the most common method.
+
+**Syntax:**
+
+```sql
+INSERT INTO table_name (column1, column2, column3)
+VALUES (value1, value2, value3);
+```
+
+Specifying columns is optional, but strongly recommended.
+
+**Example:**
+
+```sql
+INSERT INTO persons (id, person_name, birth_date, phone)
+VALUES (1, 'John Doe', '2000-05-10', '08012345678');
+```
+
+**Important Rules:**
+
+- The number of columns must match the number of values.
+- Data types must match (INT → number, DATE → valid date, etc.).
+- Primary keys cannot be NULL.
+- Constraints (like NOT NULL) must be respected.
+
+You can also insert multiple rows at once:
+
+```sql
+INSERT INTO persons (id, person_name, birth_date, phone)
+VALUES
+(2, 'Jane Smith', '1999-03-15', '08087654321'),
+(3, 'Mike Ross', '2001-07-20', '08011223344');
+```
+
+### Method 2: Insert Data from Another Table
+
+Instead of manually typing values, you can copy data from another table. This is useful when:
+
+- Migrating data
+- Backing up records
+- Creating filtered copies
+
+**Syntax:**
+
+```sql
+INSERT INTO target_table (column1, column2)
+SELECT column1, column2
+FROM source_table
+WHERE condition;
+```
+
+**Example:**
+
+```sql
+INSERT INTO new_customers (id, person_name)
+SELECT id, person_name
+FROM persons
+WHERE birth_date > '2000-01-01';
+```
+
+Here's what happens:
+
+1. The `SELECT` query retrieves data.
+2. `INSERT` takes that result and adds it into the target table.
+3. No manual values needed.
+
+---
+
+## 2️⃣ UPDATE — Modifying Existing Data
+
+The `UPDATE` command changes values in existing rows.
+
+**Syntax:**
+
+```sql
+UPDATE table_name
+SET column1 = value1
+WHERE condition;
+```
+
+**Example:**
+
+```sql
+UPDATE persons
+SET phone = '08099999999'
+WHERE id = 1;
+```
+
+This changes the phone number only for the row where id = 1.
+
+⚠️ **Why WHERE Is Critical**
+
+If you don't use `WHERE`:
+
+```sql
+UPDATE persons
+SET phone = '08099999999';
+```
+
+**Every row in the table will be updated.** That is dangerous.
+
+**Best practice:**
+Always run a `SELECT` first to confirm which rows will be affected.
+
+---
+
+## 3️⃣ DELETE — Removing Specific Rows
+
+The `DELETE` command removes rows from a table.
+
+**Syntax:**
+
+```sql
+DELETE FROM table_name
+WHERE condition;
+```
+
+**Example:**
+
+```sql
+DELETE FROM persons
+WHERE id = 3;
+```
+
+Only the row with id = 3 will be removed.
+
+⚠️ **If You Don't Use WHERE**
+
+```sql
+DELETE FROM persons;
+```
+
+**All rows will be deleted.** The table structure remains, but it becomes empty.
+
+---
+
+## TRUNCATE — Clearing the Entire Table Quickly
+
+`TRUNCATE` is similar to `DELETE` but works differently.
+
+```sql
+TRUNCATE TABLE persons;
+```
+
+**What it does:**
+
+- Removes all rows instantly
+- Is faster than `DELETE`
+- Cannot use `WHERE`
+- Often resets auto-increment counters
+- Usually cannot be rolled back (depends on DBMS)

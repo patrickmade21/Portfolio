@@ -1,0 +1,63 @@
+---
+title: 'What I Learned About Databases and SQL (In Simple Terms)'
+publishedAt: '2026-02-18'
+summary: 'A simple explanation of databases, SQL, DBMS, and how they all work together.'
+image: '/images/blog/istockphoto-1448152453-612x612.jpg'
+---
+
+Recently, I started learning more about databases and SQL, and I realized that before writing any complex queries, it’s actually very important to understand what a database really is and how everything works together.
+
+At a basic level, a **database** is just a place where data is stored. But instead of saving data in random files or folders, a database organizes the data in a smart way so it becomes easy to search, update, and manage. This is what makes databases very powerful.
+
+To communicate with a database, we use a language called **SQL**. SQL is like the way we “talk” to the database. We use it to ask questions, insert new data, update existing data, or delete data.
+
+One thing I also learned is why databases are so important. Databases are more secure than normal files, they make it easier to manage large amounts of data, and they are built to handle “big data”, meaning millions or even billions of records.
+
+Then I learned about something called a **DBMS (Database Management System)**. This is basically the software that manages the database. The DBMS receives requests from applications, data analysts, dashboards, or other tools, and decides how those requests should be handled. It also controls security, meaning it checks if a user is allowed to run a certain SQL query or not. So in a way, the DBMS is like the “brain” that controls the database.
+
+In real companies, databases usually don’t run on personal laptops. They run on **servers**, which are powerful computers that stay on 24/7. These servers can be inside the company (on-premise), or on the cloud. The important idea I learned is that the server is where the database actually lives.
+
+So in simple terms:
+
+- The **database** stores the data
+- **SQL** talks to the data
+- The **DBMS** manages everything
+- The **server** hosts the database
+
+## Types of Databases
+
+Another big topic I learned is that there are different types of databases.
+
+The first one is the **relational database**. This is the most common type. Data is stored in tables, like spreadsheets, and the tables are connected to each other using relationships. This is the type used by systems like MySQL, PostgreSQL, and Microsoft SQL Server.
+
+The second type is **non-relational databases**, also called **NoSQL**. These are more flexible and are used when data does not fit well into tables.
+
+I learned that there are different kinds of NoSQL databases:
+
+- **Key-value database**: Data is stored as pairs of keys and values, like a dictionary. Examples are Redis and Amazon DynamoDB.
+- **Column-based database**: Stores data by columns instead of rows. This is useful for analytics and very large datasets. Examples are Apache Cassandra and Amazon Redshift.
+- **Graph database**: The main focus is relationships between data points. A popular example is Neo4j.
+- **Document database**: Data is stored as documents like JSON files. The structure is flexible and not fixed like tables. A common example is MongoDB.
+
+## Structure of a Database
+
+After that, I learned about the structure of a database. Everything follows a hierarchy.
+
+1. At the top, we have the **server**.
+2. Inside the server, we can have many **databases**.
+3. Inside each database, we have **schemas**, which are like folders used to organize tables.
+4. Inside schemas, we have **tables**.
+
+Tables contain rows and columns. **Rows** are the actual records, and **columns** are the attributes. Each table should have a **primary key**, which is a unique ID for each row.
+
+I also learned that every value in a table has a **data type**. Some are numbers (like integers or decimals), some are text (like names), and some are date and time values.
+
+## SQL Command Types
+
+Finally, I learned about SQL command types. SQL commands are grouped into categories:
+
+- **DDL (Data Definition Language)**: Used to create or change structures in the database.
+- **DML (Data Manipulation Language)**: Used to insert, update, or delete data.
+- **DQL (Data Query Language)**: Used to query data, mainly using the `SELECT` statement.
+
+Overall, what I realized is that SQL is not just about writing queries. It’s about understanding how data is stored, how systems manage it, and how everything connects together. That understanding makes working with data much easier and more meaningful.

@@ -1,0 +1,263 @@
+---
+title: 'Understanding SQL Queries: How We Ask Databases Questions'
+publishedAt: '2026-02-19'
+summary: 'A breakdown of SQL queries, clauses, execution order, and how to ask databases the right questions.'
+image: '/images/blog/forward-deployed-engineering.png'
+---
+
+When working with data, everything starts with a simple idea:
+You have a question, and the data has the answer.
+
+But how do you ask the database that question?
+
+That's where SQL queries come in.
+
+## What Is an SQL Query?
+
+Your data lives inside **tables**.
+Those tables live inside a **database**.
+
+If you want to know something like:
+
+- What are the total sales this year?
+- Which customers spent more than $1,000?
+- How many users signed up last month?
+
+You need to talk to the database using its language — **SQL (Structured Query Language)**.
+
+An SQL query is simply a request you write in SQL to retrieve data from the database.
+
+The most basic and important query is the `SELECT` statement.
+
+For example:
+
+```sql
+SELECT * FROM sales;
+```
+
+This tells the database:
+
+> "Give me everything from the sales table."
+
+When you run (execute) this query:
+
+1. The database receives it.
+2. The DBMS processes it.
+3. It fetches the requested data.
+4. It sends the result back to you.
+
+**Important:**
+A `SELECT` query does not modify data.
+It only reads and retrieves data.
+
+## SQL Query Clauses Explained
+
+SQL queries are built using different sections called **clauses**.
+Each clause has a specific role.
+
+Think of clauses as tools that help you shape your question properly.
+
+### 1️⃣ SELECT – Choose What You Want
+
+The `SELECT` clause defines which columns you want to retrieve.
+
+```sql
+SELECT name, age FROM customers;
+```
+
+This retrieves only the `name` and `age` columns.
+
+If you use:
+
+```sql
+SELECT * FROM customers;
+```
+
+The asterisk (`*`) means **all columns**.
+
+**Best practice:**
+Avoid `SELECT *` in production systems. It retrieves unnecessary data and may slow performance.
+
+### 2️⃣ FROM – Where the Data Comes From
+
+The `FROM` clause tells SQL which table to get the data from.
+
+```sql
+SELECT name FROM customers;
+```
+
+Here, `customers` is the source table.
+
+Without `FROM`, SQL doesn't know where to look.
+
+### 3️⃣ WHERE – Filter Data Before Aggregation
+
+The `WHERE` clause filters rows based on a condition.
+
+```sql
+SELECT *
+FROM customers
+WHERE age > 18;
+```
+
+This retrieves only customers older than 18.
+
+`WHERE` works on the **original data**, before grouping or aggregation.
+
+### 4️⃣ ORDER BY – Sort Results
+
+The `ORDER BY` clause sorts the result set.
+
+```sql
+SELECT name, score
+FROM players
+ORDER BY score DESC;
+```
+
+- **ASC** → Ascending (default)
+- **DESC** → Descending
+
+You can also sort using multiple columns (nested ordering):
+
+```sql
+ORDER BY country ASC, score DESC;
+```
+
+This sorts first by country, then by score within each country.
+
+### 5️⃣ GROUP BY – Aggregate Data
+
+`GROUP BY` is used when you want to summarize data.
+
+**Example:** Find total sales per country.
+
+```sql
+SELECT country, SUM(sales) AS total_sales
+FROM customers
+GROUP BY country;
+```
+
+This combines rows with the same country and calculates total sales.
+
+⚠️ **Important Rule:**
+Every column in `SELECT` must either:
+
+- Be inside an aggregate function (like `SUM`, `COUNT`, `AVG`)
+- Or be included in the `GROUP BY`
+
+### 6️⃣ HAVING – Filter After Aggregation
+
+`HAVING` filters grouped results.
+
+**Example:**
+
+```sql
+SELECT country, SUM(sales) AS total_sales
+FROM customers
+GROUP BY country
+HAVING SUM(sales) > 10000;
+```
+
+**Difference between WHERE and HAVING:**
+
+- `WHERE` filters raw rows
+- `HAVING` filters aggregated results
+
+You cannot use `HAVING` without `GROUP BY`.
+
+### 7️⃣ DISTINCT – Remove Duplicates
+
+`DISTINCT` ensures only unique values appear.
+
+```sql
+SELECT DISTINCT country
+FROM customers;
+```
+
+This removes repeated country values.
+
+⚠️ **Performance Tip:**
+Use `DISTINCT` only when necessary. It forces extra processing.
+
+### 8️⃣ TOP / LIMIT – Restrict Number of Rows
+
+Sometimes you don't want all results.
+
+SQL Server uses:
+
+```sql
+SELECT TOP 5 * FROM customers;
+```
+
+MySQL and PostgreSQL use:
+
+```sql
+SELECT * FROM customers
+LIMIT 5;
+```
+
+This improves performance when you only need a preview.
+
+## The Correct Order of Writing an SQL Query
+
+SQL has a strict structure. If you don't follow it, you'll get an error.
+
+**Writing Order (Coding Order):**
+
+1. `SELECT`
+2. `DISTINCT`
+3. `TOP`
+4. columns
+5. `FROM`
+6. `WHERE`
+7. `GROUP BY`
+8. `HAVING`
+9. `ORDER BY`
+
+**Example putting everything together:**
+
+```sql
+SELECT DISTINCT TOP 2
+  col1
+FROM customers
+WHERE year = 2024
+GROUP BY country
+HAVING SUM(sales) > 5000
+ORDER BY total_sales DESC;
+```
+
+## But Here's Something More Interesting…
+
+Even though we write queries starting with `SELECT`,
+SQL actually **executes** them in a different logical order:
+
+1. `FROM`
+2. `WHERE`
+3. `GROUP BY`
+4. `HAVING`
+5. `SELECT`
+6. `ORDER BY`
+
+Understanding this helps explain why:
+
+- You cannot use column aliases in `WHERE`
+- `HAVING` works only after grouping
+
+This is where SQL becomes more than syntax — it becomes **logic**.
+
+## Final Thoughts
+
+An SQL query is simply a structured way of asking the database a question.
+
+But mastering SQL means understanding:
+
+- How to retrieve data efficiently
+- How filtering works before and after aggregation
+- How grouping transforms data
+- How execution order affects results
+- How performance is impacted by your choices
+
+Once you understand these concepts,
+you're no longer just writing queries.
+
+**You're thinking like a data engineer.**

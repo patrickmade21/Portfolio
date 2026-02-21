@@ -1,0 +1,22 @@
+---
+title: 'Absenteeism Dashboard Project'
+publishedAt: '2026-02-18'
+summary: 'An Absenteeism Dashboard built using Power BI to analyze employee attendance data and generate meaningful insights for management decision-making.'
+image: '/images/blog/project-2.jpeg'
+---
+
+In this project, I built an Absenteeism Dashboard using Power BI to analyze employee attendance data and generate meaningful insights for management decision-making.
+
+The dataset contains fields such as Agent ID, Agent Name, Supervisor, Month, and Absent. Each row represents the number of days an agent was absent in a specific month.
+
+During data preparation, I performed basic data cleaning in Power Query. This included handling missing values (where null meant no absence), standardizing text fields like agent and supervisor names, and ensuring the month column was properly formatted for time-based analysis. I also created calculated columns and measures using DAX to compute key metrics.
+
+Some of the main measures created were **Total Absenteeism**, **Average Absenteeism per Agent**, and **Absenteeism by Supervisor**. These measures were then used across different visuals in the report.
+
+The dashboard shows that total absenteeism across the period is 744, with an average of 2.64 absences per agent. The monthly trend chart highlights June as the month with the highest absenteeism, followed by a decline in July and August.
+
+A bar chart was used to compare absenteeism across supervisors, making it easy to identify teams with higher absence rates. A pie chart was used to show the distribution of absenteeism by month, while a Top 10 table ranks agents based on total absences.
+
+Interactive slicers were added for Month, Supervisor, and Agent Name to allow users filter the dashboard dynamically and explore specific segments of the data.
+
+This project demonstrates how Power BI, combined with basic data modeling and DAX, can be used to transform operational data into a simple analytical tool for workforce monitoring and performance management.

@@ -1,0 +1,140 @@
+---
+title: 'Mastering SQL Filtering: How to Retrieve Exactly What You Need'
+publishedAt: '2026-02-23'
+summary: 'Filtering allows you to extract only the rows that match specific conditions, making it one of the most powerful features of SQL.'
+image: '/images/blog/simple-feedback-loops-for-agents.png'
+---
+
+One of the most powerful features of SQL is the ability to filter data.
+Filtering allows you to extract only the rows that match specific conditions instead of retrieving everything from a table.
+
+When working with large databases, knowing how to filter data efficiently is crucial. SQL provides different types of operators to make filtering flexible and precise. Let's explore them.
+
+---
+
+## 1️⃣ Comparison Operators
+
+Comparison operators are the simplest form of filtering. They compare two values and decide whether a row should be included in the results.
+
+| Operator | Description |
+| :--- | :--- |
+| **=** | Equals |
+| **<>** or **!=** | Not equals |
+| **<** | Less than |
+| **<=** | Less than or equals |
+| **>** | Greater than |
+| **>=** | Greater than or equals |
+
+**Example:**
+
+```sql
+SELECT * FROM orders
+WHERE total_amount >= 100;
+```
+
+This retrieves all orders with a total amount greater than or equal to 100.
+
+---
+
+## 2️⃣ Logical Operators
+
+Logical operators let you combine multiple conditions. They are essential when filtering based on multiple criteria.
+
+- **AND**: All conditions must be true
+- **OR**: At least one condition must be true
+- **NOT**: Reverses the condition (excludes matching values)
+
+**Example:**
+
+```sql
+SELECT * FROM customers
+WHERE country = 'Nigeria' AND age >= 18;
+```
+
+This returns only customers in Nigeria who are 18 or older.
+
+```sql
+SELECT * FROM customers
+WHERE country = 'Nigeria' OR country = 'Ghana';
+```
+
+---
+
+## 3️⃣ Range Operators
+
+Range operators are used to check if a value falls within a specific range.
+
+- **BETWEEN ... AND ...**: Checks if a value is between two values (inclusive)
+
+**Example:**
+
+```sql
+SELECT * FROM orders
+WHERE order_date BETWEEN '2026-01-01' AND '2026-02-01';
+```
+
+This returns all orders placed in January 2026.
+
+---
+
+## 4️⃣ Membership Operators
+
+Membership operators help check whether a value exists within a list.
+
+- **IN**: Checks if a value matches any value in the list
+- **NOT IN**: Excludes values in the list
+
+**Example:**
+
+```sql
+SELECT * FROM products
+WHERE category IN ('Electronics', 'Books', 'Clothing');
+```
+
+This retrieves all products in the Electronics, Books, or Clothing categories.
+
+---
+
+## 5️⃣ Search Operator (LIKE)
+
+The `LIKE` operator is used to search for a pattern inside text data. To use `LIKE`, you must define a pattern using special wildcard characters:
+
+- **%**: Means zero or more characters
+- **_**: Means exactly one character
+
+### Pattern Examples
+
+- **M%**: The first character must be 'M', and after that can be anything.
+  - Matches: *Michael, Mary, Musa*
+- **%in**: Any value that ends with 'in'.
+  - Matches: *Martin, Chin*
+- **%r%**: Checks if there is an 'r' anywhere in the text.
+  - Matches: *Race, Brian, Mar*
+- **__b%**: First two positions can be any character, the third must be 'b'.
+  - Matches: *12b45, aabXYZ*
+  - Non-match: *ab123*
+
+---
+
+## Summary of Operators
+
+| Operator Type | Purpose |
+| :--- | :--- |
+| **Comparison** | Compare values (=, <>, <, >, <=, >=) |
+| **Logical** | Combine multiple conditions (AND, OR, NOT) |
+| **Range** | Check if a value is within a range (BETWEEN) |
+| **Membership** | Check list membership (IN, NOT IN) |
+| **Search** | Search for patterns in text (LIKE) |
+
+By combining these operators, you can write powerful queries like:
+
+```sql
+SELECT * FROM orders
+WHERE total_amount > 50
+AND country = 'Nigeria'
+AND order_date BETWEEN '2026-01-01' AND '2026-02-01';
+```
+
+This will give you all Nigerian orders above 50 placed in January 2026, exactly the data you need, nothing extra.
+
+Filtering is a fundamental skill in SQL, and mastering these operators is the key to querying data efficiently.

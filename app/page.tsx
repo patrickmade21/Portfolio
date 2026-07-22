@@ -11,10 +11,10 @@ export default function Page() {
       </h1>
       <div className="mb-4">
         <p className="mb-4">
-          Hello, I'm Patrick, an aspiring data analyst specializing in translating complex data into actionable insights.
+          Hi, I'm Patrick, a Data Analyst who turns complex data into clear, actionable insights.
         </p>
         <p className="mb-4">
-          Now deeply immersed in the world of data analysis, I wield statistical tools and data visualization techniques to derive meaningful conclusions. Proficient in Python programming, SQL, and Excel, I'm adept at transforming data into strategic narratives that guide decision-making.
+          I specialize in data analysis, business intelligence, and product analytics, using Python, SQL, Excel, Power BI, and Tableau to uncover trends, track performance, and support better business decisions.
         </p>
         <p className="mb-4 font-mono text-sm">
           📊 Skill Set: Data Analysis || Statistical Tools (Python) || Data Visualization || SQL || Excel || Problem Solving || Collaboration
